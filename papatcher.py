@@ -14,7 +14,7 @@ from contextlib import contextmanager
 from getpass import getpass
 from gzip import decompress
 from hashlib import sha1
-from http.client import OK as HTTP_OK, HTTPSConnection
+from http.client import HTTPSConnection
 from json import dumps, loads
 from operator import itemgetter
 from os import cpu_count, environ
@@ -126,7 +126,7 @@ class PAPatcher(object):
         self.connection.request("POST", "/GC/Authenticate", headers=headers,
                                 body=self.credentials)
         response = self.connection.getresponse()
-        if response.status is not HTTP_OK:
+        if response.status is not 200:
             print("! Encountered an error: {0} {1}.".format(response.status,
                                                             response.reason))
             return False
@@ -157,7 +157,7 @@ class PAPatcher(object):
         self.connection.request("GET", "/Launcher/ListStreams?Platform=Linux",
                                 headers=headers)
         response = self.connection.getresponse()
-        if response.status is not HTTP_OK:
+        if response.status is not 200:
             print("! Encountered an error: {0} {1}.".format(response.status,
                                                             response.reason))
             return None
